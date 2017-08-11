@@ -38,7 +38,7 @@ public class SectionBlockParser
     /**
      * '---++ Header', '---## Header'
      */
-    private static final Pattern HEADER_DA = Pattern.compile( "^---([+]+)\\s*(.+)\\s*$" );
+    private static final Pattern HEADER_DA = Pattern.compile( "^---[-]*([+#]+)\\s*(.+)\\s*$" );
 
     /**
      * {@link ParagraphBlockParser} to use. injected
@@ -114,9 +114,9 @@ public class SectionBlockParser
     {
         for ( int i = 0, n = s.length(); i < n; i++ )
         {
-            if ( s.charAt( i ) != '+' )
+            if ( s.charAt( i ) != '+' && s.charAt( i ) != '#')
             {
-                throw new IllegalArgumentException( "the argument must have only" + " '+' characters" );
+                throw new IllegalArgumentException( "the argument must have only" + " '+' and '#' characters" );
             }
         }
         return s.length();

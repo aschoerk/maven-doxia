@@ -117,6 +117,7 @@ public class TWikiParser
             {
                 if ( parser.accept( line ) )
                 {
+                    System.out.println(line + "Accepted by " + parser.getClass() );
                     accepted = true;
                     ret.add( parser.visit( line, source ) );
                     break;

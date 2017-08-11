@@ -22,11 +22,13 @@ package org.apache.maven.doxia.module.confluence;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.HashMap;
 import java.util.Stack;
 
 import javax.swing.text.html.HTML.Attribute;
 
 import org.apache.maven.doxia.sink.SinkEventAttributes;
+import org.apache.maven.doxia.sink.SinkSymbol;
 import org.apache.maven.doxia.sink.impl.AbstractTextSink;
 import org.apache.maven.doxia.util.HtmlTools;
 import org.codehaus.plexus.util.StringUtils;
@@ -597,6 +599,35 @@ public class ConfluenceSink
         paragraph();
     }
 
+    @Override
+    public void symbol(SinkSymbol sinkSymbol) {
+        switch (sinkSymbol) {
+            case  INFORMATION:
+                text("(i)");
+                break;
+            case OK:
+                text("(/)");
+                break;
+            case    NO:
+                text("(x)");
+                break;
+            case EXCLAMATION:
+                text("(!)");
+                break;
+            case PLUS:
+                text("(+)");
+                break;
+            case  MINUS:
+                text("(-)");
+                break;
+            case STAR:
+                text("(*)");
+                break;
+            default:
+                super.symbol(sinkSymbol);
+        }
+    }
+
     /** {@inheritDoc} */
     public void paragraph_()
     {
@@ -1049,7 +1080,6 @@ public class ConfluenceSink
      */
     public void unknown( String name, Object[] requiredParams, SinkEventAttributes attributes )
     {
-        // nop
     }
 
     /** {@inheritDoc} */
@@ -1062,7 +1092,7 @@ public class ConfluenceSink
 
         if ( verbatimBoxedFlag )
         {
-            write( "{code|borderStyle=solid}" );
+            write( "{code:borderStyle=solid}" );
         }
         else
         {

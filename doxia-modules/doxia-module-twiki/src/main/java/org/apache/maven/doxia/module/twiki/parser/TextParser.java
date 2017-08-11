@@ -73,6 +73,10 @@ public class TextParser
     /** HTML tag pattern */
     private static final Pattern HTML_TAG_PATTERN = Pattern.compile( "<(/?)([\\w]*)(.*?)(/?)>", Pattern.DOTALL );
 
+    /** Variable pattern */
+    private static final Pattern MACRO_PATTERN = Pattern.compile( "(!)?[%]([A-Za-z][\\w]*)(\\{[^}]*\\})?[%]" );
+
+
     /**
      * resolves wikiWordLinks
      */
@@ -107,6 +111,7 @@ public class TextParser
         final Matcher anchorMatcher = ANCHOR_PATTERN.matcher( line );
         final Matcher urlMatcher = URL_PATTERN.matcher( line );
         final Matcher imageTagMatcher = IMAGE_TAG_PATTERN.matcher( line );
+        final Matcher macroMatcher = MACRO_PATTERN.matcher( line );
 
         final Matcher tagMatcher = HTML_TAG_PATTERN.matcher( line );
         Matcher xhtmlMatcher = null;
@@ -147,6 +152,10 @@ public class TextParser
         {
             parseImage( line, ret, imageTagMatcher );
         }
+        else if ( macroMatcher.find() && macroMatcher.group(1) == null )
+        {
+            parseMacro( line, ret, macroMatcher );
+        }
         else
         {
             if ( line.length() != 0 )
@@ -170,6 +179,26 @@ public class TextParser
         final String src = imageTagMatcher.group( 2 );
         ret.add( new ImageBlock( src ) );
         ret.addAll( parse( line.substring( imageTagMatcher.end(), line.length() ) ) );
+    }
+
+    /**
+     * Parses the image tag
+     * @param line the line to parse
+     * @param ret where the results live
+     * @param macroMatcher variable matcher
+     */
+    private void parseMacro(final String line, final List<Block> ret, final Matcher macroMatcher )
+    {
+        ret.addAll( parse( line.substring( 0, macroMatcher.start() ) ) );
+        final String nomacro = macroMatcher.group( 1 );
+        final String name = macroMatcher.group( 2 );
+        final String arguments = macroMatcher.group( 3 );
+        if (nomacro != null) {
+            throw new IllegalArgumentException("! not expected here");
+        }
+        ret.add(new MacroBlock(name, arguments));
+        ret.addAll(parse(line.substring(macroMatcher.end(), line.length())));
+
     }
 
     /**

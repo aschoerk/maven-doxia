@@ -31,6 +31,7 @@ import org.apache.maven.doxia.logging.Log;
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.doxia.sink.SinkEventAttributes;
 import org.apache.maven.doxia.sink.SinkFactory;
+import org.apache.maven.doxia.sink.SinkSymbol;
 
 /**
  * The RandomAccessSink provides the ability to create a {@link Sink} with hooks.
@@ -901,6 +902,11 @@ public class RandomAccessSink
     public void unknown( String name, Object[] requiredParams, SinkEventAttributes attributes )
     {
         currentSink.unknown( name, requiredParams, attributes );
+    }
+
+    @Override
+    public void symbol(SinkSymbol sinkSymbol) {
+        currentSink.symbol( sinkSymbol);
     }
 
     @Override

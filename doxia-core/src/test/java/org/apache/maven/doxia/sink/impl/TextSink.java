@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 import org.apache.maven.doxia.sink.SinkEventAttributes;
+import org.apache.maven.doxia.sink.SinkSymbol;
 import org.apache.maven.doxia.sink.impl.AbstractSink;
 import org.apache.maven.doxia.sink.impl.SinkUtils;
 
@@ -828,6 +829,11 @@ public class TextSink
     public void unknown( String name, Object[] requiredParams, SinkEventAttributes attributes )
     {
         write( "unknown: " + name );
+    }
+
+    @Override
+    public void symbol(SinkSymbol sinkSymbol) {
+        write("symbol: " + sinkSymbol.name());
     }
 
     /**

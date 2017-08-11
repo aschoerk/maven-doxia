@@ -1394,6 +1394,11 @@ public interface Sink
      */
     void unknown( String name, Object[] requiredParams, SinkEventAttributes attributes );
 
+    /*
+        Output a recognized symbol
+     */
+    void symbol(SinkSymbol sinkSymbol);
+
     /**
      * Flush the writer or the stream, if needed.
      * Flushing a previously-flushed Sink has no effect.

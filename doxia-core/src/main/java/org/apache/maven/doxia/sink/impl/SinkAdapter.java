@@ -22,6 +22,7 @@ package org.apache.maven.doxia.sink.impl;
 import javax.swing.text.MutableAttributeSet;
 
 import org.apache.maven.doxia.sink.SinkEventAttributes;
+import org.apache.maven.doxia.sink.SinkSymbol;
 
 /**
  * Empty implementation of the <code>Sink</code> interface. Useful for testing purposes.
@@ -842,6 +843,11 @@ public class SinkAdapter
         }
 
         verbatim( boxed );
+    }
+
+    @Override
+    public void symbol(SinkSymbol sinkSymbol) {
+        text(sinkSymbol.name());
     }
 
     @Override

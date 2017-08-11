@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Stack;
 
 import org.apache.maven.doxia.sink.SinkEventAttributes;
+import org.apache.maven.doxia.sink.SinkSymbol;
 import org.apache.maven.doxia.sink.impl.AbstractSink;
 
 
@@ -867,5 +868,10 @@ public class WellformednessCheckingSink
     public void unknown( String name, Object[] requiredParams, SinkEventAttributes attributes )
     {
         // ignore
+    }
+
+    @Override
+    public void symbol(SinkSymbol sinkSymbol) {
+
     }
 }

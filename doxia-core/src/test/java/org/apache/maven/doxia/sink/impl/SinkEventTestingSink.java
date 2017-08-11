@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.maven.doxia.sink.SinkEventAttributes;
+import org.apache.maven.doxia.sink.SinkSymbol;
 import org.apache.maven.doxia.sink.impl.AbstractSink;
 
 /**
@@ -822,7 +823,12 @@ public class SinkEventTestingSink
         addEvent( "unknown", new Object[] {name, requiredParams, attributes} );
     }
 
-      //
+    @Override
+    public void symbol(SinkSymbol sinkSymbol) {
+        addEvent( "symbol", new Object[] {sinkSymbol.name()});
+    }
+
+    //
      // private
     //
 
